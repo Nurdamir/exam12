@@ -6,7 +6,7 @@ const AuthorImages = () => {
     const {id} = useParams() as { id: string };
     return (
         <>
-            <Images authorId={id}/>
+            <Images authorId={id} authorIdState={true}/>
         </>
     );
 };

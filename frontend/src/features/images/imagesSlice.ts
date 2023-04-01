@@ -1,19 +1,23 @@
-import {Image, ValidationError} from "../../types";
+import {Image, OneImage, ValidationError} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "../../app/store";
-import {createImage, fetchImages, removeImage} from "./imagesThunks";
+import {createImage, fetchImages, fetchOneImage, removeImage} from "./imagesThunks";
 
 interface ImagesState {
-    images: Image[];
+    images: Image[] | null;
+    oneImage: OneImage | null;
     fetchLoading: boolean;
+    fetchOne: boolean;
     createError: ValidationError | null;
     createLoading: boolean;
     deleteLoading: boolean | string;
 }
 
 const initialState: ImagesState = {
-    images: [],
+    images: null,
+    oneImage: null,
     fetchLoading: false,
+    fetchOne: false,
     createError: null,
     createLoading: false,
     deleteLoading: false,
@@ -56,14 +60,27 @@ export const imagesSlice = createSlice({
         builder.addCase(removeImage.rejected, (state) => {
             state.deleteLoading = false;
         });
+
+        builder.addCase(fetchOneImage.pending, (state) => {
+            state.fetchLoading = true;
+        });
+        builder.addCase(fetchOneImage.fulfilled, (state, {payload: oneImage}) => {
+            state.fetchLoading = false;
+            state.oneImage = oneImage;
+        });
+        builder.addCase(fetchOneImage.rejected, (state) => {
+            state.fetchLoading = false;
+        });
     }
 });
 
 export const imagesReducer = imagesSlice.reducer;
 
 export const selectImages = (state: RootState) => state.images.images;
+export const selectOneImage = (state: RootState) => state.images.oneImage;
 export const selectCreateError = (state: RootState) => state.images.createError;
 export const selectImagesFetching = (state: RootState) => state.images.fetchLoading;
+export const selectOneFetching = (state: RootState) => state.images.fetchOne;
 export const selectImageCreating = (state: RootState) => state.images.createLoading;
 export const selectImageDeleting = (state: RootState) => state.images.deleteLoading;
 

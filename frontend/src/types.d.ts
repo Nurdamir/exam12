@@ -55,3 +55,12 @@ export interface Image {
     image: string;
 }
 
+export interface OneImage {
+    _id: string;
+    user: string;
+    title: string;
+    image: string;
+}
+
+
+

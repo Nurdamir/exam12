@@ -30,7 +30,7 @@ imagesRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next
 
 imagesRouter.get('/', async (req, res, next) => {
     try {
-        let images: ImageWithId[] | null = null;
+        let images: ImageWithId[] | null;
 
         if (req.query.user) {
             images = await Image.find({user: req.query.user}).populate('user', 'displayName _id');
@@ -40,6 +40,19 @@ imagesRouter.get('/', async (req, res, next) => {
         return res.send(images);
     } catch (e) {
         return next(e);
+    }
+});
+
+imagesRouter.get('/:id', async (req, res, next) => {
+    try {
+        const image = await Image.findById(req.params.id);
+
+        if (!image) {
+            return res.status(404).send({message: 'Not found'});
+        }
+        return res.send(image);
+    } catch (e) {
+        next(e);
     }
 });
 

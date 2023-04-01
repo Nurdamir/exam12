@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
-import {Image, ImageMutation, ValidationError} from "../../types";
+import {Image, ImageMutation, OneImage, ValidationError} from "../../types";
 import {isAxiosError} from "axios";
 
 export const fetchImages = createAsyncThunk<Image[], string | undefined>(
@@ -45,5 +45,13 @@ export const removeImage = createAsyncThunk<void, string>(
     'images/delete',
     async (imageId) => {
         await axiosApi.delete('/images/' + imageId);
+    }
+);
+
+export const fetchOneImage = createAsyncThunk<OneImage, string>(
+    'images/fetchOne',
+    async (id) => {
+        const response = await axiosApi.get<OneImage>('/images/' + id);
+        return response.data;
     }
 );
