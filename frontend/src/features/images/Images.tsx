@@ -55,6 +55,10 @@ const Images: React.FC<Props> = ({
         setOpen(false);
     };
 
+    if (!authorId) {
+        authorIdState = false;
+    }
+
     return (
         <Grid container direction="column" spacing={2}>
             <Grid
