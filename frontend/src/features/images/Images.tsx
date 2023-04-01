@@ -1,13 +1,13 @@
-import {Button, Grid, Typography} from '@mui/material';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import React, {useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {Button, Grid, Typography} from '@mui/material';
+import {Link} from "react-router-dom";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import {selectUser} from "../users/usersSlice";
-import {Link} from "react-router-dom";
 import {fetchImages, fetchOneImage, removeImage} from "./imagesThunks";
 import {selectImages, selectImagesFetching, selectOneImage} from "./imagesSlice";
 import ImageItem from "./components/ImageItem";
-import ModalImage from "../oneImage/ModalImage";
+import ModalImage from "./components/ModalImage";
 
 interface Props {
     authorId?: string;
@@ -52,13 +52,13 @@ const Images: React.FC<Props> = ({authorId, authorIdState}) => {
         <Grid container direction="column" spacing={2}>
             <Grid item container justifyContent="space-between" alignItems="center">
                 {images && !images.length && (<Grid item>
-                    <Typography variant="h4">
+                    <Typography variant="h5">
                         No Images!
                     </Typography>
                 </Grid>)}
 
                 {authorId && images && images[0].user.displayName && (
-                    <Typography variant="h4">
+                    <Typography variant="h5" color="#046dbc">
                         {images[0].user.displayName}'s images!
                     </Typography>
                 )}

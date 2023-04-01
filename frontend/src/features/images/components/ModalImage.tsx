@@ -1,6 +1,6 @@
 import {Button, CardMedia, Fade, Grid, Modal, Paper} from '@mui/material';
 import React from 'react';
-import {apiURL} from "../../constants";
+import {apiURL} from "../../../constants";
 
 interface Photo {
     _id: string
@@ -47,7 +47,7 @@ const ModalImage: React.FC<Props> = ({ image, handleClose, open }) => {
                             title={image.title}
                             sx={styles.imageModal}
                         />
-                        <Grid item marginTop={2}>
+                        <Grid item marginTop={4}>
                             <Button variant="contained" color="primary" onClick={handleClose}>Close</Button>
                         </Grid>
                     </Paper>

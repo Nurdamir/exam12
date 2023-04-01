@@ -94,6 +94,7 @@ const Register = () => {
                   type="displayName"
                   autoComplete="new-displayName"
                   value={state.displayName}
+                  required
                   onChange={inputChangeHandler}
                   error={Boolean(getFieldError('displayName'))}
                   helperText={getFieldError('displayName')}

@@ -1,13 +1,14 @@
 import { GlobalError, User, ValidationError } from '../../types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import {googleLogin, login, register} from './usersThunks';
+import {googleLogin, login, logout, register} from './usersThunks';
 
 interface UsersState {
   user: User | null;
   registerLoading: boolean;
   registerError: ValidationError | null;
   loginLoading: boolean;
+  logoutLoading: boolean;
   loginError: GlobalError | null;
 }
 
@@ -16,6 +17,7 @@ const initialState: UsersState = {
   registerLoading: false,
   registerError: null,
   loginLoading: false,
+  logoutLoading: false,
   loginError: null,
 };
 
@@ -64,6 +66,16 @@ export const usersSlice = createSlice({
       state.loginLoading = false;
       state.loginError = error || null;
     });
+
+    builder.addCase(logout.pending, (state) => {
+      state.logoutLoading = true;
+    });
+    builder.addCase(logout.fulfilled, (state) => {
+      state.logoutLoading = false;
+    });
+    builder.addCase(logout.rejected, (state) => {
+      state.logoutLoading = false;
+    });
   }
 });
 
@@ -75,3 +87,4 @@ export const selectRegisterLoading = (state: RootState) => state.users.registerL
 export const selectRegisterError = (state: RootState) => state.users.registerError;
 export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
 export const selectLoginError = (state: RootState) => state.users.loginError;
+export const selectLogoutLoading = (state: RootState) => state.users.logoutLoading;

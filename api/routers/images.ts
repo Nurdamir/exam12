@@ -37,6 +37,9 @@ imagesRouter.get('/', async (req, res, next) => {
         } else {
             images = await Image.find().populate('user', 'displayName _id');
         }
+        if (!images) {
+            return res.status(404).send({message: 'Not found'});
+        }
         return res.send(images);
     } catch (e) {
         return next(e);

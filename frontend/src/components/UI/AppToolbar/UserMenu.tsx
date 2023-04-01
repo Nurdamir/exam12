@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
-import {Button, Menu, MenuItem} from '@mui/material';
+import React from 'react';
+import {Button, CircularProgress} from '@mui/material';
 import {Link, useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {logout} from "../../../features/users/usersThunks";
 import {User} from "../../../types";
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import {selectLogoutLoading} from "../../../features/users/usersSlice";
+import LogoutIcon from '@mui/icons-material/Logout';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 
 interface Props {
     user: User;
@@ -12,14 +16,8 @@ interface Props {
 const UserMenu: React.FC<Props> = ({user}) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const logoutLoading = useAppSelector(selectLogoutLoading);
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const handleLogout = async () => {
         await dispatch(logout());
@@ -28,23 +26,27 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
     return (
         <>
-            <Button component={Link} to={"/myImages"} color="inherit">My photos</Button>
             <Button
-                onClick={handleClick}
+                component={Link}
+                to={"/myImages"}
                 color="inherit"
             >
-                Hello, {user.displayName}
+                <PermMediaIcon/>
             </Button>
-            <Menu
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+            <Button
+                color="inherit"
             >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>My account</MenuItem>
-                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
+                <HandshakeIcon/>
+                {user.displayName}
+            </Button>
+            <Button
+                color="inherit"
+                onClick={handleLogout}
+                disabled={logoutLoading}
+            >
+                {logoutLoading ? <CircularProgress/> : null}
+                <LogoutIcon/>
+            </Button>
         </>
     );
 };

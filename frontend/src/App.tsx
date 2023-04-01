@@ -34,15 +34,6 @@ const App = () => {
                         />
                         <Route path="/users/:id" element={<AuthorImages/>}/>
                         <Route path="/myImages" element={<Images authorId={user?._id}/>}/>
-
-                        {/*<Route*/}
-                        {/*    path="/myCocktails"*/}
-                        {/*    element={*/}
-                        {/*      <ProtectedRoute isAllowed={user !== null}>*/}
-                        {/*        <Cocktails myId={user?._id} />*/}
-                        {/*      </ProtectedRoute>*/}
-                        {/*    }*/}
-                        {/*/>*/}
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="*" element={<h1>Not found!</h1>}/>

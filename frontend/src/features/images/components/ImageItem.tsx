@@ -56,7 +56,7 @@ const ImageItem: FC<Props> = ({
                 <Grid container textAlign="center" flexDirection="column">
                     <Typography component={Link} to={`/users/${userAuthorId}`}>{title}</Typography>
 
-                    {authorIdState === false && user?._id !== userAuthorId && (
+                    {authorIdState === false && (
                         <Typography
                             component={Link}
                             to={`/users/${userAuthorId}`}
