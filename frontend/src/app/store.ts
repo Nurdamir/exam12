@@ -3,6 +3,7 @@ import {usersReducer} from '../features/users/usersSlice';
 import {persistReducer, persistStore} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from 'redux-persist/es/constants';
+import {imagesReducer} from "../features/images/imagesSlice";
 
 const usersPersistConfig = {
     key: 'cocktail:users',
@@ -11,7 +12,7 @@ const usersPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-    // cocktails: cocktailsReducer,
+    images: imagesReducer,
     users: persistReducer(usersPersistConfig, usersReducer),
 });
 

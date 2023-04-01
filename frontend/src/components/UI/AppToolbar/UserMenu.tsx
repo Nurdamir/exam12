@@ -28,7 +28,7 @@ const UserMenu: React.FC<Props> = ({user}) => {
 
     return (
         <>
-            <Button component={Link} to={"/myPhotos"} color="inherit">My photos</Button>
+            <Button component={Link} to={"/myImages"} color="inherit">My photos</Button>
             <Button
                 onClick={handleClick}
                 color="inherit"

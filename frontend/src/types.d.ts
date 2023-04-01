@@ -40,12 +40,17 @@ export interface GlobalError {
 
 export interface ImageMutation {
     title: string;
-    image: string;
+    image: File | null;
+}
+
+interface Author {
+    _id: string;
+    displayName: string;
 }
 
 export interface Image {
     _id: string;
-    user: string;
+    user: Author;
     title: string;
     image: string;
 }
