@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
+import {useAppSelector} from "../../../app/hooks";
+import {apiURL} from "../../../constants";
 import {Link} from 'react-router-dom';
 import {Card, CardActionArea, Grid, Typography} from '@mui/material';
 import styled from '@emotion/styled';
-import {apiURL} from "../../../constants";
-import {useAppSelector} from "../../../app/hooks";
 import {selectUser} from "../../users/usersSlice";
 import {selectImageDeleting} from "../imagesSlice";
 import ButtonWithProgress from "../../../components/UI/ButtonWithProgress/ButtonWithProgress";
@@ -54,7 +54,7 @@ const ImageItem: FC<Props> = ({
                     </Grid>
                 </CardActionArea>
                 <Grid container textAlign="center" flexDirection="column">
-                    <Typography component={Link} to={`/users/${userAuthorId}`}>{title}</Typography>
+                    <Typography variant="h6" component={Link} to={`/users/${userAuthorId}`}>{title}</Typography>
 
                     {authorIdState === false && (
                         <Typography
