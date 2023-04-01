@@ -9,9 +9,14 @@ export interface IUser {
     googleId?: string;
 }
 
+export interface UserAuthor {
+    _id: Types.ObjectId;
+    displayName: string;
+}
+
 export interface ImageWithId {
     _id: Types.ObjectId;
-    user: Types.ObjectId;
+    user: UserAuthor;
     title: string;
     image: string;
 }

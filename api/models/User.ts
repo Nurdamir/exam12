@@ -36,6 +36,10 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
         type: String,
         required: true,
     },
+    token: {
+        type: String,
+        required: true,
+    },
     role: {
         type: String,
         required: true,
