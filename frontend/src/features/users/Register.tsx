@@ -66,6 +66,7 @@ const Register = () => {
               <TextField
                 label="Email"
                 name="email"
+                type="email"
                 autoComplete="new-email"
                 value={state.email}
                 required

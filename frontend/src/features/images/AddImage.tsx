@@ -21,7 +21,7 @@ const AddImage = () => {
 
     return (
         <>
-            <Typography variant="h4" sx={{mb: 2}}>New image</Typography>
+            <Typography variant="h4" sx={{mb: 2}} color="#046dbc">New image</Typography>
             <ImageForm onSubmit={onFormSubmit}/>
         </>
     );

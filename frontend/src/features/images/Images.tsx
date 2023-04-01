@@ -1,20 +1,31 @@
 import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {Button, Grid, Typography} from '@mui/material';
-import {Link} from "react-router-dom";
-import Preloader from "../../components/UI/Preloader/Preloader";
-import {selectUser} from "../users/usersSlice";
-import {fetchImages, fetchOneImage, removeImage} from "./imagesThunks";
-import {selectImages, selectImagesFetching, selectOneImage} from "./imagesSlice";
-import ImageItem from "./components/ImageItem";
-import ModalImage from "./components/ModalImage";
+import {Link} from 'react-router-dom';
+import Preloader from '../../components/UI/Preloader/Preloader';
+import {selectUser} from '../users/usersSlice';
+import {
+    fetchImages,
+    fetchOneImage,
+    removeImage,
+} from './imagesThunks';
+import {
+    selectImages,
+    selectImagesFetching,
+    selectOneImage,
+} from './imagesSlice';
+import ImageItem from './components/ImageItem';
+import ModalImage from './components/ModalImage';
 
 interface Props {
     authorId?: string;
     authorIdState?: boolean;
 }
 
-const Images: React.FC<Props> = ({authorId, authorIdState}) => {
+const Images: React.FC<Props> = ({
+                                     authorId,
+                                     authorIdState,
+                                 }) => {
     const dispatch = useAppDispatch();
     const images = useAppSelector(selectImages);
     const oneImage = useAppSelector(selectOneImage);
@@ -23,7 +34,7 @@ const Images: React.FC<Props> = ({authorId, authorIdState}) => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        if(authorId) {
+        if (authorId) {
             dispatch(fetchImages(authorId));
         } else {
             dispatch(fetchImages());
@@ -38,26 +49,27 @@ const Images: React.FC<Props> = ({authorId, authorIdState}) => {
     const getPhoto = (id: string) => {
         dispatch(fetchOneImage(id));
         setOpen(true);
-    }
+    };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    if (!authorId) {
-        authorIdState = false;
-    }
-
     return (
         <Grid container direction="column" spacing={2}>
-            <Grid item container justifyContent="space-between" alignItems="center">
-                {images && !images.length && (<Grid item>
-                    <Typography variant="h5">
-                        No Images!
-                    </Typography>
-                </Grid>)}
+            <Grid
+                item
+                container
+                justifyContent="space-between"
+                alignItems="center"
+            >
+                {!images || (images && !images.length) ? (
+                    <Grid item>
+                        <Typography variant="h5" color="#046dbc">No Images!</Typography>
+                    </Grid>
+                ) : null}
 
-                {authorId && images && images[0].user.displayName && (
+                {authorId && images && images[0]?.user?.displayName && (
                     <Typography variant="h5" color="#046dbc">
                         {images[0].user.displayName}'s images!
                     </Typography>
@@ -74,19 +86,21 @@ const Images: React.FC<Props> = ({authorId, authorIdState}) => {
             <Grid item container direction="row" spacing={1}>
                 {loading ? (
                     <Preloader loading={loading}/>
-                ) : images && images.map(image => (
-                    <ImageItem
-                        key={image._id}
-                        id={image._id}
-                        title={image.title}
-                        image={image.image}
-                        userAuthorId={image.user._id}
-                        name={image.user.displayName}
-                        onRemove={() => onRemove(image._id)}
-                        authorIdState={authorIdState}
-                        onClickOpenModal={() => getPhoto(image._id)}
-                    />
-                ))}
+                ) : images &&
+                    Array.isArray(images) &&
+                    images.map((image) => (
+                        <ImageItem
+                            key={image._id}
+                            id={image._id}
+                            title={image.title}
+                            image={image.image}
+                            userAuthorId={image.user._id}
+                            name={image.user.displayName}
+                            onRemove={() => onRemove(image._id)}
+                            authorIdState={authorIdState}
+                            onClickOpenModal={() => getPhoto(image._id)}
+                        />
+                    ))}
 
                 <ModalImage
                     handleClose={handleClose}
@@ -96,6 +110,6 @@ const Images: React.FC<Props> = ({authorId, authorIdState}) => {
             </Grid>
         </Grid>
     );
-}
+};
 
-export default Images;
+export default Images

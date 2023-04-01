@@ -53,7 +53,7 @@ const ImageItem: FC<Props> = ({
                         <StyledImage src={apiURL + '/' + image}/>
                     </Grid>
                 </CardActionArea>
-                <Grid container textAlign="center" flexDirection="column">
+                <Grid container textAlign="center" flexDirection="column" paddingBottom={2}>
                     <Typography variant="h6" component={Link} to={`/users/${userAuthorId}`}>{title}</Typography>
 
                     {authorIdState === false && (
